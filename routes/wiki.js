@@ -2,8 +2,9 @@ const {addPage, main, wikiPage} = require('../views')
 const router = require('express').Router() // eslint-disable-line new-cap
 const {Page, User} = require('../models')
 
-router.get('/', (req, res, next) => {
-  res.send(main())
+router.get('/', async (req, res, next) => {
+  const pages = await Page.findAll()
+  res.send(main(pages))
 })
 
 router.get('/add', (req, res, next) => {
@@ -19,7 +20,8 @@ router.get('/:slug', async (req, res, next) => {
       }
     })
 
-    res.send(wikiPage(page, 'Daisy'))
+    const author = await page.getAuthor()
+    res.send(wikiPage(page, author))
   } catch (error) {
     next(error)
   }
