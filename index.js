@@ -13,11 +13,11 @@ app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({extended: false}))
 
-app.use('/wiki', wikiRoutes);
-app.use('/user', userRoutes);
+app.use('/wiki', wikiRoutes)
+app.use('/users', userRoutes)
 
 app.use('/', (req, res, next) => {
-  res.redirect('/wiki');
+  res.redirect('/wiki')
 })
 
 const initialize = async () => {
