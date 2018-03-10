@@ -18,18 +18,18 @@ const Page = db.define('page', {
     allowNull: false
   },
   status: {
-    type: Sequelize.ENUM('open', 'closed')
+    type: Sequelize.ENUM('open', 'closed') // eslint-disable-line new-cap
   }
 })
 
-function generateSlug (title) {
+function generateSlug(title) {
   // Removes all non-alphanumeric characters from title
   // And make whitespace underscore
-  return title.replace(/\s+/g, '_').replace(/\W/g, '');
+  return title.replace(/\s+/g, '_').replace(/\W/g, '')
 }
 
-Page.beforeValidate((instance) => {
-  instance.slug = generateSlug(instance.title);
+Page.beforeValidate(instance => {
+  instance.slug = generateSlug(instance.title)
 })
 
 // user
@@ -46,6 +46,9 @@ const User = db.define('user', {
     }
   }
 })
+
+// Relations
+Page.belongsTo(User, {as: 'author'})
 
 module.exports = {
   db,
