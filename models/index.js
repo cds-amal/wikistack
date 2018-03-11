@@ -3,6 +3,11 @@ const db = new Sequelize('postgres://localhost:5432/wikistack', {
   logging: false
 })
 
+/* const db = new Sequelize('mainDB', null, null, {
+ *   dialect: 'sqlite',
+ *   storage: './test.sqlite'
+ * }) */
+
 // page
 const Page = db.define('page', {
   title: {

@@ -1,7 +1,6 @@
 const Chance = require('chance')
-const _ = require('lodash')
 
-const models = require('./models')
+const models = require('../models')
 const {Page, User, db} = models
 
 const chance = new Chance()
@@ -11,7 +10,7 @@ const authors = chance.n(
     name: chance.name(),
     email: chance.email()
   }),
-  7
+  14
 )
 
 const makeWikiEntry = () => {
@@ -30,10 +29,10 @@ const main = async () => {
     await db.authenticate()
     await db.sync({force: true})
 
-    const entries = _.times(20, () => makeWikiEntry())
-
-    entries.forEach(async entry => {
+    for (let ii = 0; ii <= 200; ii++) {
+      const entry = makeWikiEntry()
       const {name, email} = entry
+
       // eslint-disable-next-line no-unused-vars
       const [author, isCreated] = await User.findOrCreate({
         where: {name, email}
@@ -41,7 +40,8 @@ const main = async () => {
 
       const page = await Page.create(entry)
       page.setAuthor(author)
-    })
+    }
+
     console.log('database seeded')
   } catch (error) {
     console.log('could not seed database')

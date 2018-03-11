@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "bounceDb": "dropdb wikistack; createdb wikistack"
+    "bounce:db": "dropdb wikistack; createdb wikistack",
+    "seed:db": "npm run bounce:db; node ./scripts/fakeSeed.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,6 @@
     "sequelize": "^4.35.2"
   },
   "devDependencies": {
-    "chance": "^1.0.13",
-    "lodash": "^4.17.5"
+    "chance": "^1.0.13"
   }
 }
