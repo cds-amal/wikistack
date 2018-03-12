@@ -24,31 +24,31 @@ const makeWikiEntry = () => {
   }
 }
 
-const main = async () => {
-  try {
-    await db.authenticate()
-    await db.sync({force: true})
+const seedDB = async () => {
+  await db.authenticate()
+  await db.sync({force: true})
 
-    for (let ii = 0; ii <= 200; ii++) {
-      const entry = makeWikiEntry()
-      const {name, email} = entry
+  for (let ii = 0; ii <= 200; ii++) {
+    const entry = makeWikiEntry()
+    const {name, email} = entry
 
-      // eslint-disable-next-line no-unused-vars
-      const [author, isCreated] = await User.findOrCreate({
-        where: {name, email}
-      })
+    // eslint-disable-next-line no-unused-vars
+    const [author, isCreated] = await User.findOrCreate({
+      where: {name, email}
+    })
 
-      const page = await Page.create(entry)
-      await page.setAuthor(author)
-    }
-
-    console.log('DATABASE SEEDED!!!')
-  } catch (error) {
-    console.log(error)
-    console.log('DATABASE NOT SEEDED ')
-  } finally {
-    db.close()
+    const page = await Page.create(entry)
+    await page.setAuthor(author)
   }
 }
 
-main()
+seedDB()
+  .then(() => {
+    console.log('DATABASE SEEDED!!!')
+    db.close()
+  })
+  .catch(err => {
+    console.log(err)
+    console.log('DATABASE NOT SEEDED!!!')
+    db.close()
+  })
