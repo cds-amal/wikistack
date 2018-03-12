@@ -41,12 +41,18 @@ const main = async () => {
       const page = await Page.create(entry)
       page.setAuthor(author)
     }
-
-    console.log('database seeded')
+    console.log('DATABASE SEEDED!!!')
   } catch (error) {
-    console.log('could not seed database')
+    console.log(error)
+    console.log('DATABASE NOT SEEDED ')
+  } finally {
+    // Process hangs with connection pool draining error.  when trying to use
+    // db.close() [promise]. The docs state that pool is cleaned up at
+    // process.exit. So I force it.  See:
+    // http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#instance-method-close
+    //
+    process.exit(0)
   }
 }
 
 main()
-db.close()
