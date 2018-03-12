@@ -39,8 +39,9 @@ const main = async () => {
       })
 
       const page = await Page.create(entry)
-      page.setAuthor(author)
+      await page.setAuthor(author)
     }
+
     console.log('DATABASE SEEDED!!!')
   } catch (error) {
     console.log(error)
@@ -51,7 +52,7 @@ const main = async () => {
     // process.exit. So I force it.  See:
     // http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html#instance-method-close
     //
-    process.exit(0)
+    // process.exit(0)
   }
 }
 
