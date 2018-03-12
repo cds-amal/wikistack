@@ -27,7 +27,7 @@ const initialize = async () => {
     console.log('connected to the database')
 
     app.listen(PORT, () => {
-      console.log(`Listening on Port ${PORT}`)
+      console.log(`Server started at: http://localhost:${PORT}`)
     })
   } catch (err) {
     console.log('Fatal Error: Cannot connect to database.', err)
